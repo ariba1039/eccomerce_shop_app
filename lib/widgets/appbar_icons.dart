@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AppBarIcons extends StatelessWidget {
-  const AppBarIcons({super.key, required this.function, required this.icon});
-  final Function function;
+class AppBarIcon extends StatelessWidget {
+  const AppBarIcon({
+    super.key,
+    required this.onPressed,
+    required this.icon,
+  });
+
+  final VoidCallback onPressed;
   final IconData icon;
 
   @override
@@ -10,10 +15,8 @@ class AppBarIcons extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: GestureDetector(
-        onTap: () {
-          function();
-        },
-        child: Container(
+        onTap: onPressed,
+        child: DecoratedBox(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Theme.of(context).cardColor,

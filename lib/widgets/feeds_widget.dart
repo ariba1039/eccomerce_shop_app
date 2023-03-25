@@ -1,20 +1,21 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:provider/provider.dart';
 
 import '../consts/global_colors.dart';
 import '../models/products.model.dart';
 import '../screens/products_details.dart';
 
 class FeedsWidget extends StatelessWidget {
-  const FeedsWidget({Key? key}) : super(key: key);
+  const FeedsWidget({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
+
+  final ProductsModel product;
 
   @override
   Widget build(BuildContext context) {
-    final productsModelProvider = Provider.of<ProductsModel>(context);
-
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(2.0),
@@ -24,15 +25,7 @@ class FeedsWidget extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(8.0),
           onTap: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                type: PageTransitionType.fade,
-                child: ProductDetails(
-                  id: productsModelProvider.id.toString(),
-                ),
-              ),
-            );
+            Navigator.of(context).push(ProductDetails.routeByProductId(product.id!));
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,16 +38,18 @@ class FeedsWidget extends StatelessWidget {
                     Flexible(
                       child: RichText(
                         text: TextSpan(
-                            text: '\$',
-                            style: const TextStyle(
-                                color: Color.fromRGBO(33, 150, 243, 1)),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: "${productsModelProvider.price}",
-                                  style: TextStyle(
-                                      color: lightTextColor,
-                                      fontWeight: FontWeight.w600)),
-                            ]),
+                          text: '\$',
+                          style: const TextStyle(color: Color.fromRGBO(33, 150, 243, 1)),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: "${product.price}",
+                              style: TextStyle(
+                                color: lightTextColor,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     const Icon(IconlyBold.heart),
@@ -72,7 +67,7 @@ class FeedsWidget extends StatelessWidget {
                     color: Colors.red,
                     size: 28,
                   ),
-                  imageUrl: productsModelProvider.images![0],
+                  imageUrl: product.images![0],
                   boxFit: BoxFit.fill,
                 ),
               ),
@@ -80,7 +75,7 @@ class FeedsWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  productsModelProvider.title.toString(),
+                  product.title.toString(),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: const TextStyle(
