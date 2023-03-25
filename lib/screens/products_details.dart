@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
-
 import 'package:flutter/material.dart';
 
 import '../consts/global_colors.dart';
@@ -10,11 +9,21 @@ import '../models/products.model.dart';
 import '../services/api_handler.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({
+  const ProductDetails._({
     Key? key,
     required this.id,
   }) : super(key: key);
-  final String id;
+
+  final int id;
+
+  static Route<void> routeByProductId(int id) {
+    return MaterialPageRoute(
+      builder: (BuildContext context) {
+        return ProductDetails._(id: id);
+      },
+    );
+  }
+
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
 }
@@ -24,9 +33,10 @@ class _ProductDetailsState extends State<ProductDetails> {
   ProductsModel? productsModel;
   bool isError = false;
   String errorStr = "";
+
   Future<void> getProductInfo() async {
     try {
-      productsModel = await APIHandler.getProductById(id: widget.id);
+      productsModel = await ApiHandler.of(context).getProductById(widget.id);
     } catch (error) {
       isError = true;
       errorStr = error.toString();
@@ -50,8 +60,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             ? Center(
                 child: Text(
                   "An error occured $errorStr",
-                  style: const TextStyle(
-                      fontSize: 25, fontWeight: FontWeight.w500),
+                  style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
                 ),
               )
             : productsModel == null
@@ -74,15 +83,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children: [
                               Text(
                                 productsModel!.category!.name.toString(),
-                                style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w500),
+                                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                               ),
                               const SizedBox(
                                 height: 18,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Flexible(
                                     flex: 3,
@@ -98,17 +105,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       text: TextSpan(
                                           text: '\$',
                                           style: const TextStyle(
-                                              fontSize: 25,
-                                              color: Color.fromRGBO(
-                                                  33, 150, 243, 1)),
+                                              fontSize: 25, color: Color.fromRGBO(33, 150, 243, 1)),
                                           children: <TextSpan>[
                                             TextSpan(
-                                                text: productsModel!.price
-                                                    .toString(),
+                                                text: productsModel!.price.toString(),
                                                 style: TextStyle(
                                                     color: lightTextColor,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
+                                                    fontWeight: FontWeight.bold)),
                                           ]),
                                     ),
                                   ),
@@ -126,8 +129,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             itemBuilder: (BuildContext context, int index) {
                               return FancyShimmerImage(
                                 width: double.infinity,
-                                imageUrl:
-                                    productsModel!.images![index].toString(),
+                                imageUrl: productsModel!.images![index].toString(),
                                 boxFit: BoxFit.fill,
                               );
                             },
