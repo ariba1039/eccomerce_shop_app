@@ -1,29 +1,29 @@
-import 'package:flutter/cupertino.dart';
+class UsersModel {
+  UsersModel({
+    required this.id,
+    required this.email,
+    required this.password,
+    required this.name,
+    required this.role,
+    required this.avatar,
+  });
 
-class UsersModel with ChangeNotifier {
-  int? id;
-  String? email;
-  String? password;
-  String? name;
-  String? role;
-  String? avatar;
+  final int id;
+  final String email;
+  final String password;
+  final String name;
+  final String role;
+  final String avatar;
 
-  UsersModel(
-      {this.id, this.email, this.password, this.name, this.role, this.avatar});
+  UsersModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        email = json['email'],
+        password = json['password'],
+        name = json['name'],
+        role = json['role'],
+        avatar = json['avatar'];
 
-  UsersModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    email = json['email'];
-    password = json['password'];
-    name = json['name'];
-    role = json['role'];
-    avatar = json['avatar'];
-  }
-
-  static List<UsersModel> usersFromSnapshot(List usersSnaphot) {
-    // print("data ${usersSnaphot[0]}");
-    return usersSnaphot.map((data) {
-      return UsersModel.fromJson(data);
-    }).toList();
+  static List<UsersModel> usersFromList(List<Map<String, dynamic>> users) {
+    return users.map(UsersModel.fromJson).toList();
   }
 }
