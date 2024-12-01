@@ -1,7 +1,7 @@
 
-# Flutter Food delivery app
+# Flutter Mini Store app
 
-In this Repo, I'll build a Flutter Ecommerce App from scratch, integrating Rest Apis. This step-by-step tutorial is perfect for beginners and those looking to deepen their understanding of Rest Apis. Join me to level up your Flutter development skills.
+In this Repo, I'll build a Flutter Ecommerce  Shop App from scratch, integrating Rest Apis. This step-by-step tutorial is perfect for beginners and those looking to deepen their understanding of Rest Apis. Join me to level up your Flutter development skills.
 
 
 
