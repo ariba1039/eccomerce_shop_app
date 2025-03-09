@@ -13,21 +13,25 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   flutter_iconly: ^1.0.2
-  card_swiper: ^2.0.4
+  card_swiper: ^3.0.1
   page_transition: ^2.0.9
   provider: ^6.0.5
   fancy_shimmer_image: ^2.0.2
-  http: ^0.13.5
+  http: ^1.3.0
+  cached_network_image: ^3.4.1
+  
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
+
+dependency_overrides:
+  win32: ^5.11.0
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/avatar.png
-    - assets/images/admin.png
-    - assets/images/customer.png
-    - assets/images/warning.png
+    - assets/images/
+
